@@ -10,6 +10,7 @@ from flask import Flask, request
 
 parser = argparse.ArgumentParser(description='Send telegram bot message through HTTP.')
 parser.add_argument('-p', '--port', default=8000, help='HTTP listen port')
+parser.add_argument('-l', '--host', default='::', help='HTTP listen host')
 args = parser.parse_args()
 
 config = None
@@ -64,5 +65,5 @@ def http_handler(token, fmt=None):
     return '', 200
 
 if __name__ == '__main__':
-    app.run(port=args.port)
+    app.run(host=args.host, port=args.port)
 
