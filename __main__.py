@@ -48,7 +48,7 @@ def http_handler(token, fmt=None):
         return 'Message too long', 400
     content = request.form or request.json or request.data
     if isinstance(content, dict):
-        content = yaml.dump(json.loads(content), default_flow_style=False, allow_unicode=True)
+        content = yaml.dump(content, default_flow_style=False, allow_unicode=True)
         if fmt == 'json':
             content = json.dumps(content, indent=2, ensure_ascii=False)
     elif isinstance(content, bytes):
