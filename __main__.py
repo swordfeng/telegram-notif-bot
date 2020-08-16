@@ -23,7 +23,7 @@ def cmd_start(bot, update):
     try:
         chat_id = update.message.chat.id
         token = {'chat_id': chat_id}
-        token = jwt.encode(token, bot_token).decode('utf8')
+        token = jwt.encode(token, bot_token, algorithm='HS256').decode('utf8')
         update.message.reply_text(f'The endpoint for this chat is `{endpoint}/{token}`', parse_mode=telegram.ParseMode.MARKDOWN)
     except Exception as e:
         print(e)
@@ -39,7 +39,7 @@ app = Flask(__name__)
 @app.route('/<string:token>/<string:fmt>', methods=['POST'])
 def http_handler(token, fmt=None):
     try:
-        token = jwt.decode(token, bot_token)
+        token = jwt.decode(token, bot_token, algorithms=['HS256'])
     except Exception:
         return 'Invalid token', 401
     if 'chat_id' not in token:
